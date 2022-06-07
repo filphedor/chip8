@@ -1,0 +1,18 @@
+plugins {
+    id 'application'
+}
+
+group 'com.philfedor'
+version '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
+}
+
+application {
+    mainClass = 'com.philfedor.chip8.Chip8'
+}
