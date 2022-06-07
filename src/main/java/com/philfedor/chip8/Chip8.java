@@ -1,8 +1,11 @@
 package com.philfedor.chip8;
 
 import com.philfedor.chip8.display.ConsoleDisplay;
+import com.philfedor.chip8.display.PixelDisplay;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,32 +47,27 @@ public class Chip8 {
         keys.put(10, 14); // \n
         keys.put(110, 15); // .
 
+        int width = 64;
+        int height = 32;
+        int pixelSize = 10;
+
         Keyboard keyboard = new Keyboard(keys);
-        ConsoleDisplay display = new ConsoleDisplay(64, 32);
+        PixelDisplay display = new PixelDisplay(width, height, pixelSize, new Color(255, 255, 255), new Color(0, 0, 0));
 
         Chip8Machine machine = new Chip8Machine(rom, display, keyboard);
         machine.setProgramCounter(512);
 
         JFrame jFrame = new JFrame();
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setPreferredSize(new Dimension(width * pixelSize, height * pixelSize));
         jFrame.pack();
         jFrame.setVisible(true);
 
-
-        boolean running = true;
         while (true) {
-            if (running) {
-                machine.step();
+            machine.step();
 
-                String out = display.getScreen();
-                System.out.println(out);
-            }
-
-            try {
-                Thread.sleep(25);
-            } catch (Exception e) {
-                System.out.print("no sleep tol");
-            }
+            BufferedImage frame = display.getFrame();
+            jFrame.getGraphics().drawImage(frame, 0, 0, null);
         }
     }
 }

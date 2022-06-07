@@ -367,8 +367,6 @@ public class Chip8Machine {
             char x = hexInstruction.charAt(1);
             this.isWaiting = true;
 
-            System.out.println("ASDf");
-
             this.keyboard.waitForKey(kw -> {
                 this.isWaiting = false;
 

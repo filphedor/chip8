@@ -1,7 +1,5 @@
 package com.philfedor.chip8.display;
 
-import com.philfedor.chip8.display.BaseDisplay;
-
 public class ConsoleDisplay extends BaseDisplay {
     public ConsoleDisplay(int width, int height) {
         super(width, height);
