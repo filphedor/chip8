@@ -1,7 +1,6 @@
 package com.philfedor.chip8;
 
-import com.philfedor.chip8.display.ConsoleDisplay;
-import com.philfedor.chip8.display.PixelDisplay;
+import com.philfedor.chip8.display.IntensityDisplay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +51,7 @@ public class Chip8 {
         int pixelSize = 10;
 
         Keyboard keyboard = new Keyboard(keys);
-        PixelDisplay display = new PixelDisplay(width, height, pixelSize, new Color(255, 255, 255), new Color(0, 0, 0));
+        IntensityDisplay display = new IntensityDisplay(width, height, pixelSize, 10, 3, new Color(255, 255, 255), new Color(0, 0, 0));
 
         Chip8Machine machine = new Chip8Machine(rom, display, keyboard);
         machine.setProgramCounter(512);
