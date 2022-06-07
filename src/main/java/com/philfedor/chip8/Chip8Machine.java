@@ -1,8 +1,8 @@
 package com.philfedor.chip8;
 
+import com.philfedor.chip8.display.Chip8Display;
 import org.apache.commons.codec.binary.Hex;
 
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -33,11 +33,11 @@ public class Chip8Machine {
     private HashMap<String, Byte> dataRegisters;
     private Stack<Integer> stack;
     private Rom rom;
-    private Display display;
+    private Chip8Display display;
     private Keyboard keyboard;
     private boolean isWaiting;
 
-    public Chip8Machine(Rom rom, Display display, Keyboard keyboard) {
+    public Chip8Machine(Rom rom, Chip8Display display, Keyboard keyboard) {
         this.programCounter = 0;
         this.addressRegister = 0;
         this.stack = new Stack<>();

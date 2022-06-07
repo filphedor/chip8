@@ -1,10 +1,11 @@
 package com.philfedor.chip8;
 
+import com.philfedor.chip8.display.ConsoleDisplay;
+
 import javax.swing.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Chip8 {
@@ -44,7 +45,7 @@ public class Chip8 {
         keys.put(110, 15); // .
 
         Keyboard keyboard = new Keyboard(keys);
-        Display display = new Display();
+        ConsoleDisplay display = new ConsoleDisplay(64, 32);
 
         Chip8Machine machine = new Chip8Machine(rom, display, keyboard);
         machine.setProgramCounter(512);
