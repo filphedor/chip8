@@ -1,6 +1,9 @@
 package com.philfedor.chip8;
 
+import com.philfedor.chip8.display.BorderedIntensityDisplay;
+import com.philfedor.chip8.display.ConsoleDisplay;
 import com.philfedor.chip8.display.IntensityDisplay;
+import com.philfedor.chip8.display.PixelDisplay;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,16 +52,20 @@ public class Chip8 {
         int width = 64;
         int height = 32;
         int pixelSize = 10;
+        int border = 2;
 
         Keyboard keyboard = new Keyboard(keys);
-        IntensityDisplay display = new IntensityDisplay(width, height, pixelSize, 10, 3, new Color(255, 255, 255), new Color(0, 0, 0));
+        BorderedIntensityDisplay display = new BorderedIntensityDisplay(width, height, pixelSize, border, 10, 3, new Color(100, 255, 100), new Color(0, 0, 0));
+//        IntensityDisplay display = new IntensityDisplay(width, height, pixelSize, 10, 3, new Color(100, 255, 100), new Color(0, 0, 0));
+//        PixelDisplay display = new PixelDisplay(width, height, pixelSize, new Color(100, 255, 100), new Color(0, 0, 0));
+//        ConsoleDisplay display = new ConsoleDisplay(width, height);
 
         Chip8Machine machine = new Chip8Machine(rom, display, keyboard);
         machine.setProgramCounter(512);
 
         JFrame jFrame = new JFrame();
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setPreferredSize(new Dimension(width * pixelSize, height * pixelSize));
+        jFrame.setPreferredSize(new Dimension(width * (pixelSize + (border * 2)), height * (pixelSize + (border * 2))));
         jFrame.pack();
         jFrame.setVisible(true);
 
@@ -67,6 +74,8 @@ public class Chip8 {
 
             BufferedImage frame = display.getFrame();
             jFrame.getGraphics().drawImage(frame, 0, 0, null);
+//            String out = display.getScreen();
+//            System.out.println(out);
         }
     }
 }
