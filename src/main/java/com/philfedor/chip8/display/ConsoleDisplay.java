@@ -7,9 +7,12 @@ public class ConsoleDisplay extends BaseDisplay {
 
     public String getScreen() {
         String screen = "";
+
+        boolean[][] disp = this.getPixels();
+
         for (int i = 0; i < this.height; i++) {
             for (int j = 0; j < this.width; j++) {
-                if (this.pixels[j][i]) {
+                if (disp[j][i]) {
                     screen += "0";
                 } else {
                     screen += " ";

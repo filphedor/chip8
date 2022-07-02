@@ -3,7 +3,7 @@ package com.philfedor.chip8.display;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class BorderedIntensityDisplay extends BaseDisplay {
+public class BorderedIntensityDisplay extends BaseDisplay implements ImageDisplay {
     private int pixelSize;
     private int border;
     private Color colorOn;
@@ -34,9 +34,11 @@ public class BorderedIntensityDisplay extends BaseDisplay {
     public BufferedImage getFrame() {
         BufferedImage bufferedImage = new BufferedImage(width * (pixelSize + (border * 2)), height * (pixelSize + (border * 2)), BufferedImage.TYPE_INT_RGB);
 
+        boolean[][] disp = this.getPixels();
+
         for (int x = 0; x < this.width; x++) {
             for (int y = 0; y < this.height; y++) {
-                if (this.getPixel(x, y)) {
+                if (disp[x][y]) {
                     this.intensity[x][y] = Math.min(this.intensity[x][y] + gain, 100);
                 } else {
                     this.intensity[x][y] = Math.max(this.intensity[x][y] - loss, 0) ;

@@ -6,7 +6,7 @@ import org.apache.commons.codec.binary.Hex;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class Chip8Machine {
+public class Chip8Machine extends Thread {
     final char[] DATA_REGISTERS = new char[]{
             '0',
             '1',
@@ -26,32 +26,51 @@ public class Chip8Machine {
             'f'
     };
 
+    private Rom rom;
+    private Chip8Display display;
+    private Keyboard keyboard;
+    private boolean isRunning;
+    private boolean isWaiting;
+
     private int programCounter;
     private int addressRegister;
     private byte delayTimer;
     private byte soundTimer;
     private HashMap<String, Byte> dataRegisters;
     private Stack<Integer> stack;
-    private Rom rom;
-    private Chip8Display display;
-    private Keyboard keyboard;
-    private boolean isWaiting;
 
     public Chip8Machine(Rom rom, Chip8Display display, Keyboard keyboard) {
-        this.programCounter = 0;
-        this.addressRegister = 0;
-        this.stack = new Stack<>();
-        this.dataRegisters = new HashMap<>();
-        this.isWaiting = false;
-        this.delayTimer = 0;
-        this.soundTimer = 0;
-
         this.rom = rom;
         this.display = display;
         this.keyboard = keyboard;
+        this.isRunning = false;
+        this.isWaiting = false;
+
+        this.programCounter = 0;
+        this.addressRegister = 0;
+        this.delayTimer = 0;
+        this.soundTimer = 0;
+        this.dataRegisters = new HashMap<>();
+        this.stack = new Stack<>();
 
         for (int i = 0; i < DATA_REGISTERS.length; i++) {
             this.writeToDataRegister(DATA_REGISTERS[i], (byte) 0x00);
+        }
+    }
+
+    @Override
+    public void run() {
+        this.isRunning = true;
+
+        while(this.isRunning) {
+            this.step();
+
+            try {
+                Thread.sleep((long) (1.0 / 60 * 1000));
+            } catch (Exception e) {
+                System.out.println("Can't sleep");
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -460,10 +479,6 @@ public class Chip8Machine {
 
             this.programCounter += 1;
         }
-    }
-
-    public int getProgramCounter() {
-        return this.programCounter;
     }
 
     public Byte readFromDataRegister(char register) {
